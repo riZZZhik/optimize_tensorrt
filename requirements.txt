@@ -1,0 +1,7 @@
+# Array requirements
+numpy
+
+# Other requirements
+loguru
+
+# Please Read README for other requirements.

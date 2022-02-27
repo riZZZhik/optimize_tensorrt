@@ -1,0 +1,10 @@
+# System Ignores
+.DS_Store
+
+# IDEA Ignores
+.idea
+
+# Python Ignores
+venv
+__pycache__/
+.ipynb_checkpoints
