@@ -47,7 +47,6 @@ def onnx2trt(onnx_path, engine_path=None, dtype='fp32', trtexec_path='trtexec', 
         script.append("--" + dtype)  # Add dtype
     if use_sparsity:
         script.append("--sparsity=enable")
-    # print("".join(script))
     subprocess.check_call(script)
 
     logger.info("Successfully converted model from ONNX (%s) to TensorRT (%s)" % (onnx_path, engine_path))
