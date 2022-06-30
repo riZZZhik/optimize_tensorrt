@@ -5,6 +5,7 @@
 .idea
 
 # Python Ignores
+dist
 venv
 __pycache__/
 .ipynb_checkpoints

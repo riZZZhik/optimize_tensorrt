@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="optimize_tensorrt",
-    version="1.1",
+    version="1.0",
     description="Convert and inference TensorRT models",
     license="Apache",
     author="Dmtry Barsukov",
