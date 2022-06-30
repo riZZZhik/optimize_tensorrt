@@ -3,8 +3,10 @@ import os
 from loguru import logger
 
 
-def fastai2onnx(fastai_path, input_shape, onnx_path=None, input_names=None, output_names=None):
-    """ Convert FastAI model to ONNX.
+def fastai2onnx(
+    fastai_path, input_shape, onnx_path=None, input_names=None, output_names=None
+):
+    """Convert FastAI model to ONNX.
 
     Args:
         fastai_path (str): Path to fastai model file.
@@ -32,10 +34,7 @@ def fastai2onnx(fastai_path, input_shape, onnx_path=None, input_names=None, outp
     pytorch_model = learn.model.eval()
 
     # Add Softmax layer to model (fastai thing)
-    final_model = nn.Sequential(
-        pytorch_model,
-        torch.nn.Softmax(dim=1)
-    )
+    final_model = nn.Sequential(pytorch_model, torch.nn.Softmax(dim=1))
 
     # Export model to onnx
     torch.onnx.export(
@@ -43,15 +42,18 @@ def fastai2onnx(fastai_path, input_shape, onnx_path=None, input_names=None, outp
         torch.randn(*input_shape),
         onnx_path,
         input_names=input_names,
-        output_names=output_names
+        output_names=output_names,
     )
 
-    logger.info("Successfully converted model from FastAI (%s) to ONNX (%s)" % (fastai_path, onnx_path))
+    logger.info(
+        "Successfully converted model from FastAI (%s) to ONNX (%s)"
+        % (fastai_path, onnx_path)
+    )
     return onnx_path
 
 
 def torch2onnx(model, input_shape, onnx_path, input_names=None, output_names=None):
-    """ Convert PyTorch model to ONNX.
+    """Convert PyTorch model to ONNX.
 
     Args:
         model (torch.nn.Module): PyTorch model.
@@ -68,13 +70,16 @@ def torch2onnx(model, input_shape, onnx_path, input_names=None, output_names=Non
         torch.randn(*input_shape),
         onnx_path,
         input_names=input_names,
-        output_names=output_names
+        output_names=output_names,
     )
-    logger.info("Successfully converted model from PyTorch (%s) to ONNX (%s)" % (model.__class__.__name__, onnx_path))
+    logger.info(
+        "Successfully converted model from PyTorch (%s) to ONNX (%s)"
+        % (model.__class__.__name__, onnx_path)
+    )
 
 
 def keras2onnx(model, onnx_path=None):
-    """ Convert Keras model to ONNX.
+    """Convert Keras model to ONNX.
 
     Args:
         model (): Keras model.
@@ -89,14 +94,21 @@ def keras2onnx(model, onnx_path=None):
 
     onnx_model, _ = tf2onnx.convert.from_keras(model)
     onnx.save(onnx_model, onnx_path)
-    logger.info("Successfully converted model from Keras (%s) to ONNX (%s)" % (model.name, onnx_path))
+    logger.info(
+        "Successfully converted model from Keras (%s) to ONNX (%s)"
+        % (model.name, onnx_path)
+    )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
+
     def convert_mobilenet(weights_path):
-        fastai2onnx(weights_path, input_shape=(1, 3, 224, 224), input_names=['image_1_3_224_224'],
-                    output_names=['look'])
-
+        fastai2onnx(
+            weights_path,
+            input_shape=(1, 3, 224, 224),
+            input_names=["image_1_3_224_224"],
+            output_names=["look"],
+        )
 
     mobilenet_path = "/home/rizhik/optimize_tensorrt/playground/weights/mobilenet.pkl"
     convert_mobilenet(mobilenet_path)
