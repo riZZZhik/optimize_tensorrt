@@ -9,7 +9,6 @@ setup(
     author_email="riZZZhik@gmail.com",
     packages=find_packages("src"),
     package_dir={"": "src"},
-    url="https://github.com/gmyrianthous/example-publish-pypi",
-    keywords="https://github.com/riZZZhik/optimize_tensorrt",
+    url="https://github.com/riZZZhik/optimize_tensorrt",
     install_requires=["numpy", "loguru"],
 )
