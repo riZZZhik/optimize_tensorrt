@@ -10,7 +10,9 @@ import tensorrt as trt
 class ImageBatchStream:
     def __init__(self, shape, calibration_files, preprocessor):
         if len(shape) < 4:
-            raise ValueError(f"Input shape must have at least 4 dimensions (with batch size), but {shape} given")
+            raise ValueError(
+                f"Input shape must have at least 4 dimensions (with batch size), but {shape} given"
+            )
 
         self.shape = shape
         self.batch_size = shape[0]
@@ -18,9 +20,9 @@ class ImageBatchStream:
         self.preprocessor = preprocessor
 
         self.batch = 0
-        self.max_batches = (len(calibration_files) // self.batch_size) + \
-                           (1 if (len(calibration_files) % self.batch_size)
-                            else 0)
+        self.max_batches = (len(calibration_files) // self.batch_size) + (
+            1 if (len(calibration_files) % self.batch_size) else 0
+        )
         self.calibration_data = np.zeros(shape, dtype=np.float32)
 
     def reset(self):
@@ -29,8 +31,9 @@ class ImageBatchStream:
     def next_batch(self):
         if self.batch < self.max_batches:
             imgs = []
-            files_for_batch = self.files[self.batch_size * self.batch:
-                                         self.batch_size * (self.batch + 1)]
+            files_for_batch = self.files[
+                self.batch_size * self.batch : self.batch_size * (self.batch + 1)
+            ]
             for f in files_for_batch:
                 # logger.info("[ImageBatchStream] Processing %s" % f)
                 img = self.preprocessor(f)
@@ -44,8 +47,10 @@ class ImageBatchStream:
 
 
 class Calibrator(trt.IInt8EntropyCalibrator2):
-    def __init__(self, calibration_files, preprocessor, shape, cache_file="unknown_model.calib"):
-        """ Int8 Calibrator.
+    def __init__(
+        self, calibration_files, preprocessor, shape, cache_file="unknown_model.calib"
+    ):
+        """Int8 Calibrator.
 
         Args:
             calibration_files (list or tuple): List of paths to images for calibration.
